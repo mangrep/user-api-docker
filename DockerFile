@@ -1,0 +1,28 @@
+FROM        tomcat:8.0.21-jre8
+RUN apt-get update
+
+#install git
+RUN apt-get install -y git
+RUN mkdir /root/.ssh/
+ADD id_rsa /root/.ssh/id_rsa
+
+# Create known_hosts
+RUN touch /root/.ssh/known_hosts
+
+# Add bitbuckets key
+RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+#remove samples apps
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+#clone war
+RUN git clone git@bitbucket.org:mangrep/user-apis.git
+
+#move war file to webapps
+RUN mv user-apis/user.war /usr/local/tomcat/webapps/
+
+#delete empty folder
+RUN rm -rf user-apis
+
+EXPOSE 8080
+CMD sh /usr/local/tomcat/bin/startup.sh && tail -f /usr/local/tomcat/logs/catalina.out
