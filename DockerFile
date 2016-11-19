@@ -1,6 +1,9 @@
 FROM        tomcat:8.0.21-jre8
 RUN apt-get update
 
+#install net tools
+RUN apt-get install net-tools
+
 #install git
 RUN apt-get install -y git
 RUN mkdir /root/.ssh/
