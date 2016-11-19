@@ -22,7 +22,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 RUN git clone git@bitbucket.org:mangrep/user-apis.git
 
 #move war file to webapps
-RUN mv user-apis/user.war /usr/local/tomcat/webapps/
+RUN mv user-apis/quikwallet.war /usr/local/tomcat/webapps/
 
 #delete empty folder
 RUN rm -rf user-apis
